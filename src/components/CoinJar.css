@@ -1,0 +1,88 @@
+.coin-jar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.jar-glass {
+  width: 160px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.jar-lid {
+  width: 140px;
+  height: 20px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-subtle);
+  border-radius: 4px;
+  z-index: 10;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.2) inset;
+}
+
+.jar-body {
+  width: 160px;
+  flex-grow: 1;
+  border: 4px solid var(--border-subtle);
+  border-top: none;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 
+    inset -10px 0 20px rgba(255,255,255,0.05),
+    inset 10px 0 20px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.liquid-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.liquid-layer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: height 1s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-layer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%);
+  pointer-events: none;
+}
+
+.layer-label {
+  font-size: 0.75rem;
+  color: white;
+  font-weight: 600;
+  mix-blend-mode: overlay;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.empty-jar-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
