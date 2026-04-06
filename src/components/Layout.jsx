@@ -1,11 +1,12 @@
 import React from 'react';
 import { useFinanceStore } from '../store/useFinanceStore';
-import { LayoutDashboard, Receipt, Lightbulb, BookOpen, UserCircle, Sun, Moon, Lock, X } from 'lucide-react';
+import { LayoutDashboard, Receipt, Lightbulb, BookOpen, UserCircle, Sun, Moon, Lock, X, Menu } from 'lucide-react';
 import './Layout.css';
 
 export function Layout({ children, currentTab, setCurrentTab }) {
   const { role, setRole } = useFinanceStore();
   const [theme, setTheme] = React.useState('dark');
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [showPasswordModal, setShowPasswordModal] = React.useState(false);
   const [passwordInput, setPasswordInput] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -39,7 +40,7 @@ export function Layout({ children, currentTab, setCurrentTab }) {
 
   return (
     <div className="layout-grid">
-      <aside className="sidebar glass-panel">
+      <aside className={`sidebar glass-panel ${mobileOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-header">
           <div className="logo-container">
             <div className="logo-icon"></div>
@@ -50,28 +51,28 @@ export function Layout({ children, currentTab, setCurrentTab }) {
         <nav className="sidebar-nav">
           <button 
             className={`nav-item ${currentTab === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setCurrentTab('dashboard')}
+            onClick={() => { setCurrentTab('dashboard'); setMobileOpen(false); }}
           >
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
           </button>
           <button 
             className={`nav-item ${currentTab === 'transactions' ? 'active' : ''}`}
-            onClick={() => setCurrentTab('transactions')}
+            onClick={() => { setCurrentTab('transactions'); setMobileOpen(false); }}
           >
             <Receipt size={20} />
             <span>Transactions</span>
           </button>
           <button 
             className={`nav-item ${currentTab === 'insights' ? 'active' : ''}`}
-            onClick={() => setCurrentTab('insights')}
+            onClick={() => { setCurrentTab('insights'); setMobileOpen(false); }}
           >
             <Lightbulb size={20} />
             <span>Insights</span>
           </button>
           <button 
             className={`nav-item ${currentTab === 'story' ? 'active' : ''}`}
-            onClick={() => setCurrentTab('story')}
+            onClick={() => { setCurrentTab('story'); setMobileOpen(false); }}
           >
             <BookOpen size={20} />
             <span>Story Wrap</span>
@@ -105,9 +106,14 @@ export function Layout({ children, currentTab, setCurrentTab }) {
         </div>
       </aside>
 
+      {mobileOpen && <div className="mobile-overlay" onClick={() => setMobileOpen(false)} />}
+
       <main className="main-content">
         <header className="top-header">
           <div>
+            <button className="mobile-menu-btn" onClick={() => setMobileOpen(v => !v)} aria-label="Toggle menu">
+              <Menu size={20} />
+            </button>
             <h1>
               {currentTab === 'dashboard' ? 'Overview' : 
                currentTab === 'transactions' ? 'All Transactions' : 
